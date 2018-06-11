@@ -13,6 +13,7 @@ typedef struct {
     int xv;
     int yv;
     int lastStriker;
+    uint8_t angle;
 } ball_t;
 
 //Frame struct containing coordinates of upper left and bottom right corner.
@@ -25,6 +26,10 @@ typedef struct {
 
 //function declarations
 void reflect(int * pos_p, int wall, int * v_p);
-void updateBall(ball_t * ball_p, frame_t * frame_p);
+
+uint8_t wallCollision(ball_t * ball_p);
+uint8_t endCollision(ball_t * ball_p, uint8_t * player0lives_p, uint8_t * player1lives_p);
+uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1);
+uint8_t brickCollision(ball_t * ball_p);
 
 #endif /* _PHYSICSENGINE_H_ */
