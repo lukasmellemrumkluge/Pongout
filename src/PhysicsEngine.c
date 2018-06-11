@@ -14,26 +14,37 @@ void reflect(int * pos_p, int wall, int * v_p){
     *v_p *= -1;
 }
 
-//calculates next position and velocity of the ball
-void updateBall(ball_t * ball_p, frame_t * frame_p) {
-
-    //checking for collisions for x and y separately.
-
-    // X
-    if(ball_p->xpos + ball_p->xv < frame_p->TLx) {
-        reflect(&ball_p->xpos, frame_p->TLx, &ball_p->xv);
-    } else if (ball_p->xpos + ball_p->xv > frame_p->BRx) {
-        reflect(&ball_p->xpos, frame_p->BRx, &ball_p->xv);
+//Checks for collisions on walls and updates ball accordingly
+uint8_t wallCollision(ball_t * ball_p) {
+    if (ball_p->xpos + ball_p->xv < (1 << 14)) {
+        reflect(&ball_p->xpos, (1 << 14), &ball_p->xv);
+        return 1;
+    } else if (ball_p->xpos + ball_p->xv > (31 << 14)) {
+        reflect(&ball_p->xpos, (31 << 14), &ball_p->xv);
+        return 1;
     } else{
-        ball_p->xpos += ball_p->xv;
-    }
-
-    // Y
-    if(ball_p->ypos + ball_p->yv < frame_p -> TLy) {
-        reflect(&ball_p->ypos, frame_p->TLy, &ball_p->yv);
-    } else if (ball_p->ypos + ball_p->yv > frame_p -> BRy) {
-        reflect(&ball_p->ypos, frame_p->BRy, &ball_p->yv);
-    } else{
-        ball_p->ypos += ball_p->yv;
+        return 0;
     }
 }
+    
+uint8_t endCollision(ball_t * ball_p, uint8_t * player0lives_p, uint8_t * player1lives_p) {
+    if (ball_p->ypos + ball_p->yv < (7 << 14)) {
+        *player0lives_p--;
+        return 1;
+    } else if (ball_p->ypos + ball_p->yv > (121 << 14)) {
+        *player1lives_p--;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1) {
+    int nextX = ball_p->xpos + ball_p->xv;
+    int nextY = ball_p->ypos + ball_p->yv;
+    if (nextX < (9 << 14)) {
+        if (nextY < (9 << 14)
+            reflect
+            
+    //not finished
+
