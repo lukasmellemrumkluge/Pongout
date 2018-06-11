@@ -7,11 +7,12 @@
  */
  
  //Ball struct containing position and velocity
- typedef struct {
+typedef struct {
     int xpos;
     int ypos;
     int xv;
     int yv;
+    int lastStriker;
 } ball_t;
 
 //Frame struct containing coordinates of upper left and bottom right corner.
