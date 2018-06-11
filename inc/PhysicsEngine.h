@@ -13,6 +13,7 @@ typedef struct {
     int xv;
     int yv;
     int lastStriker;
+    uint8_t angle;
 } ball_t;
 
 //Frame struct containing coordinates of upper left and bottom right corner.
