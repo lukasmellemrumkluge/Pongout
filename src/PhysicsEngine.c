@@ -1,5 +1,6 @@
 //.c file for all internal 'physics' functions and structs in the program
 #include "PhysicsEngine.h"
+#include "stm32f30x_conf.h"
 
 // Uses 18.14 fixed-point integers
 
@@ -12,6 +13,11 @@ void reflect(int * pos_p, int wall, int * v_p){
     *pos_p = (wall << 1) - *v_p - *pos_p;
 
     *v_p *= -1;
+}
+
+void moveBall(ball_t * ball_p){
+    ball_p->xpos += ball_p->xv;
+    ball_p->ypos += ball_p->yv;
 }
 
 //Checks for collisions on walls and updates ball accordingly
@@ -156,3 +162,13 @@ uint8_t brickCollision(ball_t * ball_p){
     } // End y
     return retval;
 } // End brickCollision
+
+//Checks all collisions, updates accordingly.
+// For one ball only.
+void updatePhysics(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1m uint8_t * player0lives_p, uint8_t * player1lives_p){
+    if(wallCollision(ball_p)){}
+    else if(endCollision(ball_p, player0lives_p, player1lives_p)){}
+    else if(strikerCollision(ball_p, striker0, striker1)){}
+    else if(brickCollision(ball_t * ball_p)){}
+    else moveBall(ball_p);
+}
