@@ -54,3 +54,105 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
     }      
     //not finished
 }
+
+uint8_t brickCollision(ball_t * ball_p){
+
+    // TODO:
+    // Special bricks not implemented
+    // Score updating not implemented
+    // Placeholder for level-info (bricks).
+
+   /* About bit-shiting in this function:
+    *   >>14 - Conversion from 18:14 to int.
+    *   >>15 - Conversion and division by two.
+    *       Used for calculating x-coordinates for bricks.
+    *       Because bricks are two wide
+    *   >>16 - Conversion and division by four.
+    *       Used for calculating y-coordinates for bricks.
+            Because bricks are four tall.
+    */
+
+    // Are we even near the bricks?
+    if(ball_p->xpos>>14 > 96) return 0;
+    if(ball_p->xpos>>14 < 32) return 0;
+
+    // Remembering old positions for double-bouncing.
+    // Without these, a ball might end up inside a brick.
+    int oldx = ball_p->xpos;
+    int oldy = ball_p->ypos;
+
+    //Helper value
+    int nextx = oldx+ball_p->xv;
+
+    // Return value.
+    // Indicates if a brick has been hit.
+    uint8_t retval = 0;
+
+    /* Generally about the collision detection:
+     *
+     * The block the ball collides with is assumed
+     *  to be the one closest to the original position.
+     * This not only simplifies detection, but also
+     *  speeds it up. Change it if it feels bad.
+     * This works best visually, because the physics
+     *  is faster and more accurate than the rendering.
+     *
+     * X and Y are checked separately.
+     * This should allow corner bounces.
+     */
+
+    // X
+
+    // Are we crossing a whole-numbered coordinate?
+    if(oldx>>15 != nextx>>15){
+
+        //Calculate brick index values
+        uint32_t decoded_x = 0x00000001<<((nextx-(33<<14))>>15);
+        uint8_t iy = oldy>>16;
+
+        // Is the brick we're "hitting" there?
+        //currentLevel is a placeholder for the level (brick) data!!!!
+        if(currentLevel[iy] & decoded_x){
+            if(ball_p->vx > 0) {
+                // Hitting left edge of brick:
+                reflect(&ball_p->xpos, nextx>>14, &ball_p->xv);
+            } else {
+                // Hitting right edge of brick:
+                reflect(&ball_p->xpos, oldx>>14, &ball_p->xv);
+            }
+            //Flip the bit
+            currentLevel[iy] ^= decoded_x;
+
+            retval = 1;
+        }
+    } // End x
+
+
+    // Helper value
+    nexty = oldy+ball_p->yv;
+
+    // Y
+    if(oldy>>16 != nexty>>16){
+
+        //Calculate brick index values
+        uint32_t decoded_x = 0x00000001<<((oldx-33)>>15);
+        uint8_t iy = nexty>>16;
+
+        // Is the brick we're "hitting" there?
+        //currentLevel is a placeholder for the level (brick) data!!!!
+        if(currentLevel[iy] & decoded_x){
+            if(ball_p->vy > 0) {
+                // Hitting top of brick:
+                reflect(&ball_p->ypos, oldy>>14, &ball_p->yv);
+            } else {
+                // Hitting bottom of brick:
+                reflect(&ball_p->ypos, nexty>>14, &ball_p->yv);
+            }
+            //Flip the bit
+            currentLevel[iy] ^= decoded_x;
+
+            retval = 1;
+        }
+    } // End y
+    return retval;
+} // End brickCollision
