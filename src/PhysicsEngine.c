@@ -49,18 +49,69 @@ uint8_t endCollision(ball_t * ball_p, uint8_t * player0lives_p, uint8_t * player
 uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1) {
     int nextX = ball_p->xpos + ball_p->xv;
     int nextY = ball_p->ypos + ball_p->yv;
-    if (nextX < (9 << 14)) {
-        if (nextY > striker0 && nextY <= striker0 - (1 << 14)) {
-            reflect(ball_p);
-            ball_p->angle = ball_p->angle + ((127 - ball_p->angle) >> 1);
+    
+    //STRIKER 0
+    // check if ball passes the line where the striker0 can move.
+    if (ball_p->xpos > (9 << 14) && nextX <= (9 << 14)) {
+        //check if the ball hits the striker.
+        if (nextY >= striker0 && nextY < striker0 + (6 << 14)) {
+            reflect(&ball_p->xpos, 9 << 14, &ball_p->xv);
+            //check where it hits and adjust angle accordingly.
+            if (nextY < striker0 + (1 << 14)) {
+                ball_p->angle += (127 - ball_p->angle) >> 1;
+            }
+            else if (nextY < striker0 + (2 << 14) {
+                ball_p->angle += (127 - ball_p->angle) >> 2;
+            }
+            else if (nextY < striker0 + (4 << 14) {}                                     
+            else if (nextY < striker0 + (5 << 14) {
+                ball_p->angle -= (ball_p->angle - 383) >> 2;
+            }
+            else if (nextY >= striker0 + (5 << 14)) && nextY < striker0 + (6 << 14) {
+                ball_p->angle -= (ball_p->angle - 383) >> 1;
+            }
+            //adjust velocity vector according to new angle.
+            ball_p->xv = FIX14MULT(ball_p->v, cos(ball_p->angle));
+            ball_p->yv = FIX14MULT(ball_p->v, sin(ball_p->angle));
+            free(&nextX);
+            free(&nextY);
+            return 1;
         }
-        else if (nextY > striker0 - (1 << 14)) {
+    }
+                     
+    //STRIKER 1
+    // check if the ball passes the line where the striker1 can move.
+    if (ball_p->xpos < (31 << 14) nextX >= (31 << 14)) {
+        //check if the ball hits the striker.
+        if (nextY >= striker0 && nextY < striker0 + (6 << 14)) {
+            reflect(&ball_p->xpos, 9 << 14, &ball_p->xv);
+            //check where it hits and adjust angle accordingly.
+            if (nextY < striker0 + (1 << 14)) {
+                ball_p->angle -= (ball_p->angle - 127) >> 1;
+            }
+            else if (nextY < striker0 + (2 << 14) {
+                ball_p->angle -= (ball_p->angle - 127) >> 2;
+            }
+            else if (nextY < striker0 + (4 << 14) {}                                     
+            else if (nextY < striker0 + (5 << 14) {
+                ball_p->angle += (383 - ball_p->angle) >> 2;
+            }
+            else if (nextY >= striker0 + (5 << 14)) && nextY < striker0 + (6 << 14) {
+                ball_p->angle += (383 - ball_p->angle) >> 1;
+            }
+            //adjust velocity vector according to new angle.
+            ball_p->xv = FIX14MULT(ball_p->v, cos(ball_p->angle));
+            ball_p->yv = FIX14MULT(ball_p->v, sin(ball_p->angle));
+            free(&nextX);
+            free(&nextY);
+            return 1;
         }
-        ball_p->xv = FIX14MULT(ball_p->v, cos(ball_p->angle));
-        ball_p->yv = FIX14MULT(ball_p->v, sin(ball_p->angle));
-    }      
-    //not finished
+    }
+    free(&nextX);
+    free(&nextY);
+    return 0;
 }
+
 
 uint8_t brickCollision(ball_t * ball_p){
 
