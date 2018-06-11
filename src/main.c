@@ -50,6 +50,8 @@ int main(void)
     // 18.14 values
     int striker0 = 0;
     int striker1 = 0;
+    uint8_t activeBalls = 0x00;
+    ball_t balls[8];
     uint32_t bricks[8];
     uint8_t speed = 1;
     int score = 0x0000;
