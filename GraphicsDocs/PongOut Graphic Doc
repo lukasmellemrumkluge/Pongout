@@ -1,0 +1,33 @@
+GAME : PongOut
+
+Bricks are stored as a 32x8 array of bits, each bit representing one brick.
+The position of the bricks are fixed, according to coordinates below.
+
+Two types of bricks exist: normal and special.
+A separate 32x8 array of bits indicate which bricks are special.
+
+These arrays are more specifically arrays of 8 uint32_t.
+With bits in the integers being x location, and array position y location.
+
+ -- IMPORTANT:
+
+Coordinates mentioned from here are zero-indexed, and rounded down.
+So a ball placement of 32.5 is rounded down to pixel 32.
+
+ -- BOUNDARIES:
+
+The boundaries mentioned here are the boundaries the ball has to cross.
+For example, the left paddle's boundary would be its right edge.
+
+Left level bound:   7
+Left paddle :       9
+Left brick bound:   33
+Right brick bound:  96
+Right paddle:       119
+Right level bound:  121
+
+ -- DIMENSIONS:
+
+Paddle height:  6
+Brick width:    2
+Brick height:   4
