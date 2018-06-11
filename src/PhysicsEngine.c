@@ -164,12 +164,28 @@ uint8_t brickCollision(ball_t * ball_p){
     return retval;
 } // End brickCollision
 
+//Adds a new ball. Only called when there are no balls.
+void newBall(ball_t * ball_p, uint8_t * activeBalls){
+    // TODO
+}
+
 //Checks all collisions, updates accordingly.
 // For one ball only.
-void updatePhysics(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1m uint8_t * player0lives_p, uint8_t * player1lives_p){
-    if(wallCollision(ball_p)){}
-    else if(endCollision(ball_p, player0lives_p, player1lives_p)){}
-    else if(strikerCollision(ball_p, striker0, striker1)){}
-    else if(brickCollision(ball_t * ball_p)){}
-    else moveBall(ball_p);
+void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1m uint8_t * player0lives_p, uint8_t * player1lives_p){
+    
+    //Assumes no balls
+    uint8_t noBalls = 1;
+    
+    for(int i = 0; i<8; i++){
+        if(activeBalls & (0x01<<i)) continue;
+        if(wallCollision(&ball_p[i])){}
+        else if(endCollision(&ball_p[i], player0lives_p, player1lives_p)){}
+        else if(strikerCollision(&ball_p[i], striker0, striker1)){}
+        else if(brickCollision(&ball_p[i])){}
+        else moveBall(&ball_p[i]);
+        noBalls = 0; //There are balls! Hooray!
+    }
+    if(noBalls){
+        newBall(ball_p, activeBalls);
+    }
 }
