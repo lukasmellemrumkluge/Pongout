@@ -43,8 +43,14 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
     int nextX = ball_p->xpos + ball_p->xv;
     int nextY = ball_p->ypos + ball_p->yv;
     if (nextX < (9 << 14)) {
-        if (nextY < (9 << 14)
-            reflect
-            
+        if (nextY > striker0 && nextY <= striker0 - (1 << 14)) {
+            reflect(ball_p);
+            ball_p->angle = ball_p->angle + ((127 - ball_p->angle) >> 1);
+        }
+        else if (nextY > striker0 - (1 << 14)) {
+        }
+        ball_p->xv = FIX14MULT(ball_p->v, cos(ball_p->angle));
+        ball_p->yv = FIX14MULT(ball_p->v, sin(ball_p->angle));
+    }      
     //not finished
-
+}
