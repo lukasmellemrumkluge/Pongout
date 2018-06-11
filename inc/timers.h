@@ -7,6 +7,8 @@ typedef struct {
     int seconds;
     int centiseconds;
 } funTime_t;
+uint8_t timerflag = 0;
+
 
 volatile funTime_t t1;
 volatile funTime_t t2;

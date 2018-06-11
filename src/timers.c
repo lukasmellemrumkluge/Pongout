@@ -14,7 +14,6 @@
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h" // Input/output library for this course
 #include "timers.h"
-uint8_t interrupt = 0;
 
 void startTimer1(int f) { // Initiation and starting the timer,  f - Frequency
     int reloadValue = 64*1000000/f;
@@ -41,7 +40,7 @@ void resetTimer1(void){
 }
 
 void TIM2_IRQHandler(void) { // interrupt code
-    interrupt = 1;
+    timerflag = 1;
 /*
     t1.centiseconds++;
     if (t1.centiseconds/100 > 0) {
