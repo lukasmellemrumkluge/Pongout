@@ -2,6 +2,9 @@
 #ifndef _PHYSICSENGINE_H_
 #define _PHYSICSENGINE_H_
 
+#include "stm32f30x_conf.h"
+
+
 /* PhysicsEngine.h
  * contains ball and frame struct, and prototypes for the physics functions.
  */
