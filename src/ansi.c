@@ -263,7 +263,7 @@ renderBricks(uint32_t * bricks){
                 if(bricks[i] & 0x00000001<<k){
                     printf("%c", 0xDB);
                     printf("%c", 0xDB);
-                } else {
+                }else{
                     printf("%c", 0x20);
                     printf("%c", 0x20);
                 }
@@ -288,30 +288,30 @@ renderStrikers(int striker0, int striker1){
 // Renders PongOut game
 void renderGame(ball_t * ball_p, uint32_t * bricks, int striker0, int striker1){
     clrscr();
-    
+
     frame_t frame;
-    frame->TLx = 0;
-    frame->TLy = 0;
-    frame->BRx = 127;
-    frame->BRy = 31;
-    window(frame,0,0);
-    
+    frame.TLx = 0;
+    frame.TLy = 0;
+    frame.BRx = 127;
+    frame.BRy = 31;
+    window(&frame,0,0);
+
     frame_t left;
-    frame->TLx = 0;
-    frame->TLy = 0;
-    frame->BRx = 6;
-    frame->BRy = 31;
-    window(left,2,0);
-    
+    left.TLx = 0;
+    left.TLy = 0;
+    left.BRx = 6;
+    left.BRy = 31;
+    window(&left,2,0);
+
     frame_t right;
-    frame->TLx = 121;
-    frame->TLy = 0;
-    frame->BRx = 127;
-    frame->BRy = 31;
-    window(right,2,0);
-    
+    right.TLx = 121;
+    right.TLy = 0;
+    right.BRx = 127;
+    right.BRy = 31;
+    window(&right,2,0);
+
     renderBricks(bricks);
     renderStrikers(striker0, striker1);
-    
+
     renderBall(&ball_p[0]);
 }

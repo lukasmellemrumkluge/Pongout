@@ -59,12 +59,12 @@ void TIM2_IRQHandler(void) { // interrupt code
     TIM2->SR &= ~0x0001; // Clear interrupt bit
 }
 
-uint8_t interruptflag(){
-    if(interrupt){
-        interrupt = 0;
-        return 1;
-    }else{ return 0;}
-}
+//uint8_t interruptflag(){
+//    if(interrupt){
+//        interrupt = 0;
+//        return 1;
+//    }else{ return 0;}
+//}
 
 void setSplitTimeFromTimer1(funTime_t *split){
     split->centiseconds = t1.centiseconds;
