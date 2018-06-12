@@ -245,17 +245,17 @@ void newBall(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0){
 
 //Checks all collisions, updates accordingly.
 // For one ball only.
-void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1, uint8_t * lives, uint8_t * score){//player0lives_p, uint8_t * player1lives_p){
+void updatePhysics(ball_t * ball_p, uint8_t * activeBalls_p, uint32_t * striker0_p, uint32_t * striker1_p, uint8_t * lives_p, uint8_t * score_p){//player0lives_p, uint8_t * player1lives_p){
     
     //Assumes no balls
     uint8_t noBalls = 1;
     
     for(int i = 0; i<8; i++){
-        if(activeBalls & (0x01<<i)) continue;
+        if(activeBalls_p & (0x01<<i)) continue;
         if(wallCollision(&ball_p[i])){}
-        else if(endCollision(&ball_p[i], player0lives_p, player1lives_p)){}
-        else if(strikerCollision(&ball_p[i], striker0, striker1)){}
-        else if(brickCollision(&ball_p[i]), score){}
+        else if(endCollision(&ball_p[i], lives_p)){}
+        else if(strikerCollision(&ball_p[i], striker0_p, striker1_p)){}
+        else if(brickCollision(&ball_p[i]), score_p){}
         else moveBall(&ball_p[i]);
         noBalls = 0; //There are balls! Hooray!
     }
