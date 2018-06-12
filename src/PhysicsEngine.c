@@ -9,9 +9,7 @@
 void reflect(int * pos_p, int wall, int * v_p){
     //This function assumes good input.
     //All checks must be made before calling it.
-
     *pos_p = (wall << 1) - *v_p - *pos_p;
-
     *v_p *= -1;
 }
 
@@ -34,12 +32,12 @@ uint8_t wallCollision(ball_t * ball_p) {
 }
     
 // TODO: Delete ball from ball-array
-uint8_t endCollision(ball_t * ball_p, uint8_t * player0lives_p, uint8_t * player1lives_p) {
+uint8_t endCollision(ball_t * ball_p, uint8_t * lives_p) {
     if (ball_p->ypos + ball_p->yv < (7 << 14)) {
-        *player0lives_p--;
+        *lives_p--;
         return 1;
     } else if (ball_p->ypos + ball_p->yv > (121 << 14)) {
-        *player1lives_p--;
+        *lives_p-=0x10;
         return 1;
     } else{
         return 0;
@@ -243,7 +241,7 @@ uint8_t brickCollision(ball_t * ball_p){
             }
             //Flip the bit
             currentLevel[iy] ^= decoded_x;
-
+    
             retval = 1;
         }
     } // End y
