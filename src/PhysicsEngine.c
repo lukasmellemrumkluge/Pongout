@@ -87,7 +87,11 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
                     }
                 }
             }
+<<<<<<< HEAD
 */
+=======
+*/          
+>>>>>>> 329e7140d49a17e16f33f397819adb1191a2fa96
             if (XOR3(ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0)){
                 ball_p->angle = 512 - ball_p->angle;
             }
@@ -126,9 +130,15 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
     // check if the ball passes the line where the striker1 can move.
     if (ball_p->xpos < (31 << 14) && nextX >= (31 << 14)) {
         //check if the ball hits the striker.
+<<<<<<< HEAD
         if (nextY >= * striker0 && nextY < * striker0 + (6 << 14)) {
 
             if (XOR3(!ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0)){
+=======
+        if (nextY >= striker0 && nextY < striker0 + (6 << 14)) {
+            
+            if (XOR3(!ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0)) {
+>>>>>>> 329e7140d49a17e16f33f397819adb1191a2fa96
                 ball_p->angle = 512 - ball_p->angle;
             }
             if (ball_p->lastStriker) {
@@ -230,7 +240,11 @@ uint8_t brickCollision(ball_t * ball_p, uint16_t * score, uint32_t * bricks){
             if(ball_p->xv > 0) {
                 // Hitting left edge of brick:
                 reflect(&ball_p->xpos, nextx>>14, &ball_p->xv);
+<<<<<<< HEAD
             }else{
+=======
+            } else{
+>>>>>>> 329e7140d49a17e16f33f397819adb1191a2fa96
                 // Hitting right edge of brick:
                 reflect(&ball_p->xpos, oldx>>14, &ball_p->xv);
             }
@@ -263,7 +277,11 @@ uint8_t brickCollision(ball_t * ball_p, uint16_t * score, uint32_t * bricks){
             if(ball_p->yv > 0) {
                 // Hitting top of brick:
                 reflect(&ball_p->ypos, oldy>>14, &ball_p->yv);
+<<<<<<< HEAD
             }else{
+=======
+            } else{
+>>>>>>> 329e7140d49a17e16f33f397819adb1191a2fa96
                 // Hitting bottom of brick:
                 reflect(&ball_p->ypos, nexty>>14, &ball_p->yv);
             }
