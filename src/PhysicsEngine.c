@@ -113,11 +113,10 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
 }
 
 
-uint8_t brickCollision(ball_t * ball_p){
+uint8_t brickCollision(ball_t * ball_p, uint8_t score){
 
     // TODO:
     // Special bricks not implemented
-    // Score updating not implemented
     // Placeholder for level-info (bricks).
 
    /* About bit-shiting in this function:
@@ -180,7 +179,13 @@ uint8_t brickCollision(ball_t * ball_p){
             }
             //Flip the bit
             currentLevel[iy] ^= decoded_x;
-
+            // update the score of the hitting player
+            if(ball_p->laststriker){
+                score += 0x10;
+            }else{
+                score += 0x01;
+            }
+                
             retval = 1;
         }
     } // End x
@@ -208,7 +213,12 @@ uint8_t brickCollision(ball_t * ball_p){
             }
             //Flip the bit
             currentLevel[iy] ^= decoded_x;
-
+            // update the score of the hitting player
+            if(ball_p->laststriker){
+                score += 0x10;
+            }else{
+                score += 0x01;
+            }
             retval = 1;
         }
     } // End y
@@ -235,7 +245,7 @@ void newBall(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0){
 
 //Checks all collisions, updates accordingly.
 // For one ball only.
-void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1 uint8_t * player0lives_p, uint8_t * player1lives_p){
+void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1, uint8_t * lives, uint8_t * score){//player0lives_p, uint8_t * player1lives_p){
     
     //Assumes no balls
     uint8_t noBalls = 1;
@@ -245,7 +255,7 @@ void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, 
         if(wallCollision(&ball_p[i])){}
         else if(endCollision(&ball_p[i], player0lives_p, player1lives_p)){}
         else if(strikerCollision(&ball_p[i], striker0, striker1)){}
-        else if(brickCollision(&ball_p[i])){}
+        else if(brickCollision(&ball_p[i]), score){}
         else moveBall(&ball_p[i]);
         noBalls = 0; //There are balls! Hooray!
     }
