@@ -213,7 +213,12 @@ uint8_t brickCollision(ball_t * ball_p){
             }
             //Flip the bit
             currentLevel[iy] ^= decoded_x;
-
+            // update the score of the hitting player
+            if(ball_p->laststriker){
+                score += 0x10;
+            }else{
+                score += 0x01;
+            }
             retval = 1;
         }
     } // End x
@@ -241,7 +246,12 @@ uint8_t brickCollision(ball_t * ball_p){
             }
             //Flip the bit
             currentLevel[iy] ^= decoded_x;
-    
+            // update the score of the hitting player
+            if(ball_p->laststriker){
+                score += 0x10;
+            }else{
+                score += 0x01;
+            }    
             retval = 1;
         }
     } // End y
