@@ -54,7 +54,7 @@ int main(void)
     ball_t balls[8];
     uint32_t bricks[8];
     uint8_t speed = 1;
-    uint8_t score = 0x00;
+    uint16_t score = 0x0000;
     uint8_t lives = 0x33;
     int renderCount = 0;
     int physicsCount = 0;
