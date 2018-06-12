@@ -15,7 +15,6 @@ void blink(uint8_t on);
 void inverse(uint8_t on);
 void reset();
 void window(frame_t * frame_p, int style, char * title_p);
-void renderBall(ball_t * ball_p);
-void renderAll(ball_t * ball_p, frame_t * frame_p);
+void renderGame(ball_t * ball_p, uint32_t * bricks, int striker0, int striker1);
 
 #endif /* _ANSI_H_ */
