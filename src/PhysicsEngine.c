@@ -216,13 +216,26 @@ uint8_t brickCollision(ball_t * ball_p){
 } // End brickCollision
 
 //Adds a new ball. Only called when there are no balls.
-void newBall(ball_t * ball_p, uint8_t * activeBalls){
+void newBall(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0){
     // TODO
+    // Always spawns at player 0
+    // Always spawns ball 0
+    
+    //Coords in 18:14
+    ball_p[0]->xpos = 9<<14;
+    ball_p[0]->ypos = *striker0 + (3<<14);
+    ball_p[0]->xv = 5;
+    ball_p[0]->yv = 5;
+    ball_p[0]->lastStriker = 0;
+    ball_p[0]->angle = 128;
+    
+    //Activate ball 0
+    *activeBalls | 0x01;
 }
 
 //Checks all collisions, updates accordingly.
 // For one ball only.
-void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1m uint8_t * player0lives_p, uint8_t * player1lives_p){
+void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, uint32_t * striker1 uint8_t * player0lives_p, uint8_t * player1lives_p){
     
     //Assumes no balls
     uint8_t noBalls = 1;
@@ -237,6 +250,6 @@ void updatePhysics(ball_t * ball_p, uint8_t * activeBalls, uint32_t * striker0, 
         noBalls = 0; //There are balls! Hooray!
     }
     if(noBalls){
-        newBall(ball_p, activeBalls);
+        newBall(ball_p, activeBalls, striker0);
     }
 }
