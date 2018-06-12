@@ -58,7 +58,7 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
             
             // Deduce normal reflect angle from last striker hit
             // if/else structure needs to be compressed
-            if(!ball_p->lastStriker){
+/*            if(!ball_p->lastStriker){
                 if (ball_p->yv > 0){
                     if (ball_p->angle < 128){
                         ball_p->angle = 511 - ball_p->angle;
@@ -86,6 +86,13 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
                         ball_p->angle = - ball_p->angle; //adding a full revolution to avoid negative angles
                     }   
                 }    
+            }
+*/          
+            if (XOR3(ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0) {
+                ball_p->angle = 512 - ball_p->angle;
+            }
+            if (lastStriker) {
+                ball_p->angle += 128;
             }
             
             reflect(&ball_p->xpos, 9 << 14, &ball_p->xv);
@@ -117,6 +124,15 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
     if (ball_p->xpos < (31 << 14) nextX >= (31 << 14)) {
         //check if the ball hits the striker.
         if (nextY >= striker0 && nextY < striker0 + (6 << 14)) {
+            
+            if (XOR3(!ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0) {
+                ball_p->angle = 512 - ball_p->angle;
+            }
+            if (lastStriker) {
+                ball_p->angle += 128;
+            }
+            
+            
             reflect(&ball_p->xpos, 9 << 14, &ball_p->xv);
             //check where it hits and adjust angle accordingly.
             if (nextY < striker0 + (1 << 14)) {
