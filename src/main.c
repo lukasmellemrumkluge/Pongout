@@ -82,7 +82,8 @@ int main(void)
         }
 
         if(renderCount > 10000){
-            updateRender();
+            renderAll(balls, bricks, striker0, striker1);
+            //updateRender();
             renderCount = 0;
         }
         // INSERT lives equal 0 gives return
