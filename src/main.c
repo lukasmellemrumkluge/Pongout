@@ -28,7 +28,7 @@ loadLevel(int * levelSelect, uint32_t * currentLevel){
             currentLevel = level1;
             break;
         default :
-            currentLevel = default_level;
+            currentLevel = defaultLevel;
     }
 }
 
@@ -48,8 +48,8 @@ int main(void)
 
     //Initialize game variables
     // 18.14 values
-    int striker0 = 0;
-    int striker1 = 0;
+    uint32_t striker0 = 0;
+    uint32_t striker1 = 0;
     uint8_t activeBalls = 0x00;
     ball_t balls[8];
     uint32_t bricks[8];
