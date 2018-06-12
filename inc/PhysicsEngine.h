@@ -8,11 +8,13 @@
  
  //Ball struct containing position and velocity
 typedef struct {
+    // 18.14
     int xpos;
     int ypos;
     int xv;
     int yv;
-    int lastStriker;
+    
+    uint8_t lastStriker;
     uint8_t angle;
 } ball_t;
 
