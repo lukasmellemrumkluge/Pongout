@@ -60,20 +60,20 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
             
             // Deduce normal reflect angle from last striker hit
             // if/else structure needs to be compressed
-            if(!ball_p->lastStriker) {
-                if (ball_p->yv > 0) {
-                    if (ball_p->angle < 128) {
+            if(!ball_p->lastStriker){
+                if (ball_p->yv > 0){
+                    if (ball_p->angle < 128){
                         ball_p->angle = 511 - ball_p->angle;
                     }
                 }
                 else {
-                    if (ball_p->angle > 127) {
+                    if (ball_p->angle > 127){
                         ball_p->angle = 511 - ball_p->angle;
                 }    
             }
             else {
-                if (ball_p->yv > 0) {
-                    if (ball_p->angle < 128) {
+                if (ball_p->yv > 0){
+                    if (ball_p->angle < 128){
                         ball_p->angle = -ball_p->angle;
                     }
                     else {
@@ -81,7 +81,7 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
                     }
                 }
                 else {
-                    if (ball_p->angle < 128) {
+                    if (ball_p->angle < 128){
                         ball_p->angle = 128 - ball_p->angle;
                     }
                     else {
@@ -92,17 +92,17 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
             
             reflect(&ball_p->xpos, 9 << 14, &ball_p->xv);
             //check where it hits and adjust angle accordingly.
-            if (nextY < striker0 + (1 << 14)) {
+            if (nextY < striker0 + (1 << 14)){
                 ball_p->angle += (127 - ball_p->angle) >> 1;
             }
-            else if (nextY < striker0 + (2 << 14) {
+            else if (nextY < striker0 + (2 << 14)){
                 ball_p->angle += (127 - ball_p->angle) >> 2;
             }
-            else if (nextY < striker0 + (4 << 14) {}                                     
-            else if (nextY < striker0 + (5 << 14) {
+            else if (nextY < striker0 + (4 << 14)){}                                     
+            else if (nextY < striker0 + (5 << 14)){
                 ball_p->angle -= (ball_p->angle - 383) >> 2;
             }
-            else if (nextY >= striker0 + (5 << 14)) && nextY < striker0 + (6 << 14) {
+            else if (nextY >= striker0 + (5 << 14) && nextY < striker0 + (6 << 14)) {
                 ball_p->angle -= (ball_p->angle - 383) >> 1;
             }
             //adjust velocity vector according to new angle.
@@ -124,14 +124,14 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
             if (nextY < striker0 + (1 << 14)) {
                 ball_p->angle -= (ball_p->angle - 127) >> 1;
             }
-            else if (nextY < striker0 + (2 << 14) {
+            else if (nextY < striker0 + (2 << 14)){
                 ball_p->angle -= (ball_p->angle - 127) >> 2;
             }
-            else if (nextY < striker0 + (4 << 14) {}                                     
-            else if (nextY < striker0 + (5 << 14) {
+            else if (nextY < striker0 + (4 << 14)){}                                     
+            else if (nextY < striker0 + (5 << 14)){
                 ball_p->angle += (383 - ball_p->angle) >> 2;
             }
-            else if (nextY >= striker0 + (5 << 14)) && nextY < striker0 + (6 << 14) {
+            else if (nextY >= striker0 + (5 << 14) && nextY < striker0 + (6 << 14)){
                 ball_p->angle += (383 - ball_p->angle) >> 1;
             }
             //adjust velocity vector according to new angle.
