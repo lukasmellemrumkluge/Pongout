@@ -25,6 +25,6 @@ typedef struct {
 } frame_t;
 
 //function declarations
-void updatePhysics(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1m uint8_t * player0lives_p, uint8_t * player1lives_p);
+void updatePhysics(ball_t * ball_p, uint32_t * striker0, uint32_t * striker1 uint8_t * player0lives_p, uint8_t * player1lives_p);
 
 #endif /* _PHYSICSENGINE_H_ */
