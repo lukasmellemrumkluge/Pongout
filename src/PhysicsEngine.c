@@ -88,7 +88,7 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
                 }    
             }
 */          
-            if (XOR3(ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0) {
+            if (XOR3(ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0)){
                 ball_p->angle = 512 - ball_p->angle;
             }
             if (lastStriker) {
@@ -121,11 +121,11 @@ uint8_t strikerCollision(ball_t * ball_p, uint32_t * striker0, uint32_t * strike
                      
     //STRIKER 1
     // check if the ball passes the line where the striker1 can move.
-    if (ball_p->xpos < (31 << 14) nextX >= (31 << 14)) {
+    if (ball_p->xpos < (31 << 14) && nextX >= (31 << 14)) {
         //check if the ball hits the striker.
         if (nextY >= striker0 && nextY < striker0 + (6 << 14)) {
             
-            if (XOR3(!ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0) {
+            if (XOR3(!ball_p->lastStriker, ball_p -> angle > 127 && ball_p -> angle < 512, ball_p->yv > 0)) {
                 ball_p->angle = 512 - ball_p->angle;
             }
             if (lastStriker) {
@@ -223,7 +223,7 @@ uint8_t brickCollision(ball_t * ball_p, uint16_t * score){
             if(ball_p->vx > 0) {
                 // Hitting left edge of brick:
                 reflect(&ball_p->xpos, nextx>>14, &ball_p->xv);
-            } else {
+            } else{
                 // Hitting right edge of brick:
                 reflect(&ball_p->xpos, oldx>>14, &ball_p->xv);
             }
@@ -256,7 +256,7 @@ uint8_t brickCollision(ball_t * ball_p, uint16_t * score){
             if(ball_p->vy > 0) {
                 // Hitting top of brick:
                 reflect(&ball_p->ypos, oldy>>14, &ball_p->yv);
-            } else {
+            } else{
                 // Hitting bottom of brick:
                 reflect(&ball_p->ypos, nexty>>14, &ball_p->yv);
             }
