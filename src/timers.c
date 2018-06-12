@@ -15,6 +15,7 @@
 #include "30010_io.h" // Input/output library for this course
 #include "timers.h"
 
+
 void startTimer1(int f) { // Initiation and starting the timer,  f - Frequency
     int reloadValue = 64*1000000/f;
     RCC->APB1ENR |= RCC_APB1Periph_TIM2; // Enable clock line to timer 2;
@@ -40,7 +41,7 @@ void resetTimer1(void){
 }
 
 void TIM2_IRQHandler(void) { // interrupt code
-    timerflag = 1;
+    t1.flag = 1;
 /*
     t1.centiseconds++;
     if (t1.centiseconds/100 > 0) {
@@ -74,6 +75,8 @@ void setSplitTimeFromTimer1(funTime_t *split){
 
 }
 
+
+/*
 void startTimer2(int f) { // Initiation and starting the timer,  f - Frequency
     int reloadValue = 64*1000000/f;
     RCC->APB1ENR |= RCC_APB1Periph_TIM2; // Enable clock line to timer 2;
@@ -122,3 +125,4 @@ void setSplitTimeFromTimer2(funTime_t *split){
     split->hours = t2.hours;
 
 }
+*/

@@ -1,17 +1,20 @@
 
 #ifndef _timers_H_
 #define _timers_H_
+
 typedef struct {
     int hours;
     int minutes;
     int seconds;
     int centiseconds;
+    int flag;
 } funTime_t;
-uint8_t timerflag = 0;
+
 
 
 volatile funTime_t t1;
 volatile funTime_t t2;
+
 
 void startTimer1(int f);
 void stopTimer1(void);

@@ -7,11 +7,12 @@
 
 #ifndef LOOKUP_H
 #define LOOKUP_H
+#include "stm32f30x_conf.h"
 
 // === LUT SIZES ===
 #define SIN_SIZE 512
 
 // === LUT DECLARATIONS ===
-extern const signed short SIN[512];
+const signed short SIN[512];
 
 #endif	// LOOKUP_H

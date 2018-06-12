@@ -7,17 +7,18 @@
 //
 // =====================================================================
 
-//#include "lookup.h"?
+#include "lookup.h"
 #include <stdio.h>
+#include "stm32f30x_conf.h"
 
-struct vector_t {
+typedef struct{
     int32_t x, y;
-}
+} vector_t;
 
 // -----------------------------------------------------------------------
 // SIN: a 512 long LUT of 16bit values in 2.14 format
 // sin(x*pi/256)
-const signed short SIN[512] =
+const signed short SIN[512] =   // Should maybe be in uint32_t
         {
                 0x0000, 0x00C9, 0x0192, 0x025B, 0x0324, 0x03ED, 0x04B5, 0x057E,
                 0x0646, 0x070E, 0x07D6, 0x089D, 0x0964, 0x0A2B, 0x0AF1, 0x0BB7,
@@ -107,18 +108,19 @@ int32_t expand(int32_t i) {
     return i << 2;
 }
 
-int sin(int a) {
+uint32_t fix14sin(int a) {
 // 360° = 512
     a %= 512;
     return SIN[a];
 }
 
-int cos(int a) {
+uint32_t fix14cos(int a) {
 //cos(a) = sin(a + 90°)
     a += 128;
-    return sin(a);
+    return fix14sin(a);
 }
 
+/*
 void initVector(struct vector_t *v_p) {
     v_p->x = 10;
     v_p->y = 20;
@@ -130,6 +132,8 @@ void rotateVector(struct vector_t *v_p, int a) {
     v_p->y = v_p->x * sin(a) + v_p->y * cos(a);
 }
 
+
 void main() {
     printFix(expand(cos(923)));
 }
+*/

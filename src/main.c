@@ -13,16 +13,23 @@
 **********************************************************************/
 #include "stm32f30x_conf.h"
 #include "30010_io.h"
+
+#include "lookup.h"
 #include "PhysicsEngine.h"
 #include "ansi.h"
+
 #include "joystick.h"
 #include "led.h"
-#include "lookup.h"
+
 #include "potmeter.h"
+
 #include "timers.h"
+
 #include "levels.h"
 
-loadLevel(int * levelSelect, uint32_t * currentLevel){
+
+void loadLevel(int * levelSelect, uint32_t * currentLevel){
+
     switch(* levelSelect){
         case 1 :
             currentLevel = level1;
@@ -32,19 +39,17 @@ loadLevel(int * levelSelect, uint32_t * currentLevel){
     }
 }
 
-
-
 int main(void)
 {
-
     //Initializing hardware setup
     // is initialized in Main
-    initializeJoystick();
-    initializeLed();
-    initPot();
-    init_usb_uart(9600);
-    init_spi_lcd();
+    init_usb_uart(115200);
     startTimer1(100);
+    initializeJoystick();
+    //initializeLed();
+    initPot();
+    init_spi_lcd();
+
 
     //Initialize game variables
     // 18.14 values
@@ -60,7 +65,7 @@ int main(void)
     int physicsCount = 0;
 
     // striker initial position
-    loadLevel(0, &bricks);//0: default
+    loadLevel(0, bricks);//0: default
     //Initiate ball 1
 
     // Rendering initial positions
@@ -70,19 +75,19 @@ int main(void)
     {
 
         // Check if the timer have had an interrupt since last call
-        if(timerflag){
+        if(t1.flag){
             physicsCount++;
             renderCount++;
-            timerflag = 0;
+            t1.flag = 0;
         }
 
-        if(physicsCount > 10000-speed*10){
-            updatePhysics(&balls,&activeBalls,&striker0,&striker1,&lives,&score);
+        if(physicsCount > 60){//10000-speed*10){
+            updatePhysics(balls, &activeBalls, &striker0, &striker1, &lives, &score, bricks);
             physicsCount = 0;
         }
 
-        if(renderCount > 10000){
-            renderAll(balls, bricks, striker0, striker1);
+        if(renderCount > 30){//10000){
+            renderGame(balls, bricks, striker0, striker1);
             //updateRender();
             renderCount = 0;
         }
@@ -91,3 +96,4 @@ int main(void)
 
     }
 }
+

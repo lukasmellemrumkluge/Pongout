@@ -2,7 +2,8 @@
 
 #include "stm32f30x_conf.h" // STM32 config
 #include "PhysicsEngine.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 
 
@@ -226,6 +227,7 @@ void window(frame_t * frame_p, int style, char * title_p) {
                 printf("%s", title_p);
         }
     }
+    /*
     //free memory
     free(&TLx);
     free(&TLy);
@@ -236,8 +238,9 @@ void window(frame_t * frame_p, int style, char * title_p) {
     free(&HL);
     free(&TL);
     free(&TR);
-    free(&BL); 
-    free(&BR);  
+    free(&BL);
+    free(&BR);
+    */
 }
 
 // takes pointer to ball_struct and renders it according to the postion.
@@ -250,13 +253,13 @@ void renderBall(ball_t * ball_p) {
     printf("o");
 }
 
-renderBricks(uint32_t * bricks){
+void renderBricks(uint32_t * bricks){
     //Doesn't render special bricks!
-    
+    int i, j;
     // Whole rows
-    for(int i=0; i<8;i++){
+    for(i=0; i<8;i++){
         //Single lines
-        for(int j=0; j++; j<4){
+        for(j=0; j<4; j++){
             gotoxy(33,(i*8)+j);
             //Single block slices
             for(int k=0; k<32; k++){
@@ -272,7 +275,7 @@ renderBricks(uint32_t * bricks){
     }
 }
 
-renderStrikers(int striker0, int striker1){
+void renderStrikers(int striker0, int striker1){
     //Striker 0
     for(int i=0;i<6;i++){
         gotoxy(8,(striker0>>14)+i);
