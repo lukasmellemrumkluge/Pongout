@@ -34,12 +34,12 @@ uint8_t wallCollision(ball_t * ball_p) {
 }
     
 // TODO: Delete ball from ball-array
-uint8_t endCollision(ball_t * ball_p, uint8_t * player0lives_p, uint8_t * player1lives_p) {
+uint8_t endCollision(ball_t * ball_p, uint8_t * lives_p){//player0lives_p, uint8_t * player1lives_p) {
     if (ball_p->ypos + ball_p->yv < (7 << 14)) {
-        *player0lives_p--;
+        (*lives_p) -= (0x01);//*player0lives_p--;
         return 1;
     } else if (ball_p->ypos + ball_p->yv > (121 << 14)) {
-        *player1lives_p--;
+        (*lives_p) -= (0x10);//*player1lives_p--;
         return 1;
     } else{
         return 0;
