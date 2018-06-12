@@ -99,7 +99,7 @@ void hideCursor() {
 }
 
 
-//helpfunction for window function. Takes coordinates, end and middle characters and line length
+// Helper function for window(). Takes coordinates, end and middle characters and line length
 void printFrameLine(uint8_t x, uint8_t y, char left, char middle, char right, uint8_t length) {
     char * line = calloc(length + 1,sizeof (char));
     line[0] = left;
@@ -158,6 +158,19 @@ void window(frame_t * frame_p, int style, char * title_p) {
             BL = 200;
             BR = 188;
             break;
+        
+        // STYLE 2
+        // Solid sides, blank BG
+        // No title
+        case 2 :
+            BG = 0x20;
+            VL = 0xDB;
+            HL = 0xDB;
+            TL = 0xDB;
+            TR = 0xDB;
+            BL = 0xDB;
+            BR = 0xDB;
+            break;
 
             // DEFAULT STYLE
             // - single line
@@ -203,6 +216,10 @@ void window(frame_t * frame_p, int style, char * title_p) {
                 printf("%c", 185);
                 printf("%s", title_p);
                 printf("%c", 204);
+                break;
+            
+            case 2 :
+                break;
 
             default :
                 gotoxy(TLx + 1, TLy + 1);
@@ -233,11 +250,68 @@ void renderBall(ball_t * ball_p) {
     printf("o");
 }
 
-//renders frame and ball
-void renderAll(ball_t * ball_p, frame_t * frame_p){
-    clrscr();
-    window(frame_p,0,0);
-    renderBall(ball_p);
+renderBricks(uint32_t * bricks){
+    //Doesn't render special bricks!
+    
+    // Whole rows
+    for(int i=0; i<8;i++){
+        //Single lines
+        for(int j=0; j++; j<4){
+            gotoxy(33,(i*8)+j);
+            //Single block slices
+            for(int k=0; k<32; k++){
+                if(bricks[i] & 0x00000001<<k){
+                    printf("%c", 0xDB);
+                    printf("%c", 0xDB);
+                } else {
+                    printf("%c", 0x20);
+                    printf("%c", 0x20);
+                }
+            }
+        }
+    }
+}
 
-    //TODO: render bricks and striker
+renderStrikers(int striker0, int striker1){
+    //Striker 0
+    for(int i=0;i<6;i++){
+        gotoxy(8,(striker0>>14)+i);
+        printf("%c", 0xDB);
+    }
+    //Striker 1
+    for(int i=0;i<6;i++){
+        gotoxy(119,(striker1>>14)+i);
+        printf("%c", 0xDB);
+    }
+}
+
+// Renders PongOut game
+void renderGame(ball_t * ball_p, uint32_t * bricks, int striker0, int striker1){
+    clrscr();
+    
+    frame_t frame;
+    frame->TLx = 0;
+    frame->TLy = 0;
+    frame->BRx = 127;
+    frame->BRy = 31;
+    window(frame,0,0);
+    
+    frame_t left;
+    frame->TLx = 0;
+    frame->TLy = 0;
+    frame->BRx = 6;
+    frame->BRy = 31;
+    window(left,2,0);
+    
+    frame_t right;
+    frame->TLx = 121;
+    frame->TLy = 0;
+    frame->BRx = 127;
+    frame->BRy = 31;
+    window(right,2,0);
+    
+    renderBricks(bricks);
+    renderStrikers(striker0, striker1);
+    
+    renderBall(&ball_p[0]);
 }
