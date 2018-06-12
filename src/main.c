@@ -20,7 +20,7 @@
 #include "lookup.h"
 #include "potmeter.h"
 #include "timers.h"
-//#include "levels.h"
+#include "levels.h"
 
 loadLevel(int * levelSelect, uint32_t * currentLevel){
     switch(* levelSelect){
