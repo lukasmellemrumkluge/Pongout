@@ -4,6 +4,7 @@
 
 #include "stm32f30x_conf.h"
 
+#define XOR(a, b) ( (a && !b) || (!a && b) )
 
 /* PhysicsEngine.h
  * contains ball and frame struct, and prototypes for the physics functions.
