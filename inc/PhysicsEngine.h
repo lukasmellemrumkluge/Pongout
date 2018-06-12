@@ -14,7 +14,7 @@ typedef struct {
     int xv;
     int yv;
     
-    uint8_t lastStriker;
+    uint8_t lastStriker; // the first bit indicates the striker that last hit the ball
     uint8_t angle;
 } ball_t;
 
